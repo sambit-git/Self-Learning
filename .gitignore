@@ -30,3 +30,7 @@
 *.exe
 *.out
 *.app
+runtest
+
+.runtest
+.vscode
