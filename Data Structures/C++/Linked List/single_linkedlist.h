@@ -1,45 +1,47 @@
 #include<iostream>
 
+template <typename T>
 class Node
 {
     private:
-        int data;
-        Node * next;
+        T data;
+        Node<T> * next;
     public:
-        Node(int data) : data(data), next(NULL) {}
+        Node(T data) : data(data), next(NULL) {}
 
-        int getData()
+        T getData()
         {
             return data;
         }
 
-        void setData(int data)
+        void setData(T data)
         {
             this->data = data;
         }
 
-        Node* getNext()
+        Node<T>* getNext()
         {
             return next;
         }
         
-        void setNext(Node* next)
+        void setNext(Node<T>* next)
         {
             this->next = next;
         }
 };
 
+template <typename T>
 class LinkedList
 {
     private:
-        Node* head;
+        Node<T>* head;
         int size;
-        Node* tail;
+        Node<T>* tail;
 
         // These methods are recursive which need an initial value to start
         // So, these will be overloaded with default value in public section
         // with no arguments
-        void printReverse(Node* tmp)
+        void printReverse(Node<T>* tmp)
         {
             if(tmp != NULL){
                 
@@ -52,7 +54,7 @@ class LinkedList
             }
         }
 
-        void headNode(int data)
+        void headNode(T data)
         {
             head = new Node(data);
             size = 1;
@@ -62,13 +64,13 @@ class LinkedList
     public:
         LinkedList(): head(nullptr), size(0), tail(head) {}
         
-        LinkedList(int data): head(new Node(data)), size(1), tail(head) {}
+        LinkedList(T data): head(new Node(data)), size(1), tail(head) {}
 
          ~LinkedList() {
         // Destructor to free the memory for the linked list nodes
-        Node* current = head;
+        Node<T>* current = head;
         while (current) {
-            Node* temp = current;
+            Node<T>* temp = current;
             current = current->getNext();
             delete temp;
         }
@@ -78,11 +80,11 @@ class LinkedList
 
     }
 
-        Node* getHead(){
+        Node<T>* getHead(){
             return head;
         }
 
-        Node* getTail(){
+        Node<T>* getTail(){
             return tail;
         }
 
@@ -90,12 +92,12 @@ class LinkedList
             return size;
         }
 
-        void append(int data)
+        void append(T data)
         {
             if(size == 0)
                 headNode(data);
             else if(size > 0){
-                Node* n = new Node(data);
+                Node<T>* n = new Node(data);
                 tail->setNext(n);
                 size ++;
                 tail = tail->getNext();
@@ -104,12 +106,12 @@ class LinkedList
             }
         }
 
-        void prepend(int data)
+        void prepend(T data)
         {
             if(size == 0)
                 headNode(data);
             else if(size > 0){
-                Node* n = new Node(data);
+                Node<T>* n = new Node(data);
                 n->setNext(head);
                 size ++;
                 head = n;
@@ -118,7 +120,7 @@ class LinkedList
             }
         }
 
-        void insert(int data, int pos){
+        void insert(T data, int pos){
             if( pos < 0 || pos > size){
                 std::cout<<std::endl;
                 std::cout<<"Cannot insert node ";
@@ -128,8 +130,8 @@ class LinkedList
             else if ( pos == 0 )
                 prepend( data );
             else{
-                Node* n = new Node(data);
-                Node *tmp = head;
+                Node<T>* n = new Node(data);
+                Node<T>* tmp = head;
                 for( int i = 0; i < pos-1; i++ )
                     tmp = tmp->getNext();
                 
@@ -139,9 +141,9 @@ class LinkedList
             }
         }
 
-        int search(int target)
+        int search(T target)
         {
-            Node* tmp = head;
+            Node<T>* tmp = head;
             for ( int i=0; i<size; i++)
             {
                 if(tmp->getData() == target)
@@ -157,7 +159,7 @@ class LinkedList
         }
 
         void reverse(){
-            Node *prev = nullptr, *cur = head, *next;
+            Node<T> *prev = nullptr, *cur = head, *next;
             tail = head;
             while (cur != nullptr)
             {
@@ -172,9 +174,9 @@ class LinkedList
         void sort()
         {
             int min;
-            Node *pos=head, *minPtr;
+            Node<T> *pos=head, *minPtr;
             for(int i=0; i<size; i++){
-                Node *tmpNode = pos;
+                Node<T> *tmpNode = pos;
                 minPtr = pos;
                 min = INT32_MAX;
                 while (tmpNode != NULL)
@@ -194,10 +196,10 @@ class LinkedList
             
         }
 
-        int popFirst()
+        T popFirst()
         {
             int data = head->getData();
-            Node *tmp = head->getNext();
+            Node<T> *tmp = head->getNext();
             delete head;
             head = tmp;
             // delete tmp;
@@ -205,9 +207,9 @@ class LinkedList
             return data;
         }
         
-        int popLast()
+        T popLast()
         {
-            Node*tmp = head;
+            Node<T>*tmp = head;
             while(tmp->getNext() != tail)
                 tmp = tmp->getNext();
             int data = tail->getData();
@@ -222,9 +224,9 @@ class LinkedList
         // int popAt(int index){}
         // void swap(int index1, int index2){}
 
-        friend std::ostream& operator<<(std::ostream& os, const LinkedList& ll)
+        friend std::ostream& operator<<(std::ostream& os, const LinkedList<T>& ll)
         {
-            Node *tmp = ll.head;
+            Node<T> *tmp = ll.head;
             os<<std::endl;
             if ( tmp == NULL ){
                 os<<"EMPTY -> LINKED -> LIST"<<std::endl;

@@ -7,7 +7,7 @@ using std::vector;
 // Single Node Linked List Test Fixture
 class SingleNodeLinkedListTestFixture : public ::testing::Test {
     protected:
-        LinkedList ll = LinkedList(10);
+        LinkedList<int> ll = LinkedList<int>(10);
 
         void verifySize(int size){
             EXPECT_EQ(ll.getSize(), size);
@@ -15,7 +15,7 @@ class SingleNodeLinkedListTestFixture : public ::testing::Test {
 
         void verifySequence(vector<int> values)
         {
-            Node *tmp = ll.getHead();
+            Node<int> *tmp = ll.getHead();
             for(int value: values){
                 EXPECT_EQ(tmp->getData(), value);
                 tmp = tmp->getNext();
@@ -245,7 +245,7 @@ TEST_F(SingleNodeLinkedListTestFixture, PopLast)
 // Zero Node Linked List Test Fixture
 class ZeroNodeLinkedListTestFixture : public ::testing::Test {
     protected:
-        LinkedList ll = LinkedList();
+        LinkedList<int> ll = LinkedList<int>();
 
         void verifySize(int size){
             EXPECT_EQ(ll.getSize(), size);
@@ -253,7 +253,7 @@ class ZeroNodeLinkedListTestFixture : public ::testing::Test {
 
         void verifySequence(vector<int> values)
         {
-            Node *tmp = ll.getHead();
+            Node<int> *tmp = ll.getHead();
             for(int value: values){
                 EXPECT_EQ(tmp->getData(), value);
                 tmp = tmp->getNext();
