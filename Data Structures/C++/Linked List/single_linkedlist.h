@@ -52,6 +52,13 @@ class LinkedList
             }
         }
 
+        void headNode(int data)
+        {
+            head = new Node(data);
+            size = 1;
+            tail = head;
+        }
+
     public:
         LinkedList(): head(nullptr), size(0), tail(head) {}
         
@@ -85,18 +92,30 @@ class LinkedList
 
         void append(int data)
         {
-            Node* n = new Node(data);
-            tail->setNext(n);
-            size ++;
-            tail = tail->getNext();
+            if(size == 0)
+                headNode(data);
+            else if(size > 0){
+                Node* n = new Node(data);
+                tail->setNext(n);
+                size ++;
+                tail = tail->getNext();
+            }else{
+                std::cout<<std::endl<<"Invalid Scenario. Size can't be negative"<<std::endl;
+            }
         }
 
         void prepend(int data)
         {
-            Node* n = new Node(data);
-            n->setNext(head);
-            size ++;
-            head = n;
+            if(size == 0)
+                headNode(data);
+            else if(size > 0){
+                Node* n = new Node(data);
+                n->setNext(head);
+                size ++;
+                head = n;
+            }else{
+                std::cout<<std::endl<<"Invalid Scenario. Size can't be negative"<<std::endl;
+            }
         }
 
         void insert(int data, int pos){
@@ -207,8 +226,10 @@ class LinkedList
         {
             Node *tmp = ll.head;
             os<<std::endl;
-            if ( tmp == NULL )
+            if ( tmp == NULL ){
                 os<<"EMPTY -> LINKED -> LIST"<<std::endl;
+                return os;
+            }
             
             os<<"LinkedList[ "<<ll.size<<" ]: ";
             
