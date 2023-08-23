@@ -69,7 +69,7 @@ class LinkedList
          ~LinkedList() {
         // Destructor to free the memory for the linked list nodes
         Node<T>* current = head;
-        while (current) {
+        while (current != nullptr) {
             Node<T>* temp = current;
             current = current->getNext();
             delete temp;
@@ -198,10 +198,12 @@ class LinkedList
 
         T popFirst()
         {
-            int data = head->getData();
+            T data = head->getData();
             Node<T> *tmp = head->getNext();
             delete head;
             head = tmp;
+            if(head == nullptr)
+                tail = nullptr;
             // delete tmp;
             size--;
             return data;
@@ -212,7 +214,7 @@ class LinkedList
             Node<T>*tmp = head;
             while(tmp->getNext() != tail)
                 tmp = tmp->getNext();
-            int data = tail->getData();
+            T data = tail->getData();
             // delete tail;
             tail = tmp;
             tmp->setNext(NULL);
